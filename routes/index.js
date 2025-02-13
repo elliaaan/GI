@@ -17,7 +17,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: "profile_pictures", // Имя папки в Cloudinary
+    folder: "profile_pictures",
     allowed_formats: ["jpg", "png", "jpeg"],
   },
 });
@@ -61,6 +61,29 @@ router.put('/profile', isAuthenticated, upload.single('profilePicture'), async (
     return res.redirect('/profile');
   } catch (error) {
     console.error('Profile update error:', error);
+    return res.status(500).send('Internal Server Error');
+  }
+});
+
+// 📌 Удаление фото профиля
+router.delete('/profile/delete-picture', isAuthenticated, async (req, res) => {
+  try {
+    const user = await User.findById(req.session.user.id);
+    if (!user || !user.profilePicture) return res.redirect('/profile');
+
+    // 📌 Получаем `public_id` Cloudinary (он нужен для удаления фото)
+    const publicId = user.profilePicture.split('/').pop().split('.')[0];
+
+    // 📌 Удаляем фото из Cloudinary
+    await cloudinary.uploader.destroy(`profile_pictures/${publicId}`);
+
+    // 📌 Очищаем поле фото в БД
+    user.profilePicture = '';
+    await user.save();
+
+    return res.redirect('/profile');
+  } catch (error) {
+    console.error('Delete picture error:', error);
     return res.status(500).send('Internal Server Error');
   }
 });
