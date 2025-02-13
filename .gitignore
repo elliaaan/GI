@@ -1,0 +1,18 @@
+# Игнорируем зависимости
+node_modules/
+npm-debug.log
+
+# Файлы среды
+.env
+
+# Файлы логов и кэша
+logs/
+*.log
+pids/
+*.pid
+*.seed
+*.csv
+
+# Кеш Express
+public/uploads/
+public/images/

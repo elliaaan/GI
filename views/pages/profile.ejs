@@ -1,0 +1,17 @@
+<%- include('../layout', { 
+    body: `
+      <h2>Profile</h2>
+      <p>Email: <%= user.email %></p>
+      <% if (user.profilePicture) { %>
+        <img src="<%= user.profilePicture %>" alt="Profile Picture" width="150">
+      <% } else { %>
+        <p>No profile picture</p>
+      <% } %>
+      <form action="/profile?_method=PUT" method="POST" enctype="multipart/form-data">
+        <label>Upload new profile picture</label>
+        <input type="file" name="profilePicture">
+        <button type="submit">Update Profile</button>
+      </form>
+    `,
+    user: user
+}) %>
