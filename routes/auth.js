@@ -1,8 +1,13 @@
-// routes/auth.js
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
+
+// Регулярное выражение для валидации email
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+// Функция для валидации пароля (минимум 8 символов, хотя бы одна буква и цифра)
+const isValidPassword = (password) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password);
 
 // Регистрация (GET)
 router.get('/register', (req, res) => {
@@ -14,12 +19,24 @@ router.post('/register', async (req, res) => {
   try {
     const { email, password } = req.body;
     
-    // Валидация
+    // Проверка заполнения полей
     if (!email || !password) {
       return res.render('pages/register', { error: 'Please fill all fields' });
     }
 
-    // Проверяем, есть ли пользователь
+    // Валидация email
+    if (!emailRegex.test(email)) {
+      return res.render('pages/register', { error: 'Invalid email format' });
+    }
+
+    // Валидация пароля
+    if (!isValidPassword(password)) {
+      return res.render('pages/register', { 
+        error: 'Password must be at least 8 characters long and contain at least one letter and one number' 
+      });
+    }
+
+    // Проверяем, существует ли уже пользователь
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.render('pages/register', { error: 'User already exists' });
