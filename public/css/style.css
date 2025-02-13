@@ -40,13 +40,14 @@ nav {
     display: flex;
     justify-content: center;
     gap: 15px;
+    flex-wrap: wrap; /* Позволяет переносить элементы */
 }
 
 nav a {
     color: #333;
     text-decoration: none;
     font-weight: bold;
-    padding: 5px 10px;
+    padding: 8px 12px;
     border-radius: 5px;
     transition: 0.3s ease-in-out;
 }
@@ -68,7 +69,8 @@ form {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    width: 90%; /* Адаптивная ширина */
+    max-width: 400px;
     text-align: center;
 }
 
@@ -100,4 +102,48 @@ form button {
 
 form button:hover {
     background-color: #ff6680;
+}
+
+/* 📌 Адаптивность */
+@media screen and (max-width: 768px) {
+    /* Делаем шапку и футер меньше */
+    header, footer {
+        padding: 10px;
+    }
+
+    /* Уменьшаем отступы и шрифт */
+    h1, h2, p {
+        margin: 10px;
+        font-size: 18px;
+    }
+
+    /* Делаем навигацию столбиком на маленьких экранах */
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* Уменьшаем форму */
+    form {
+        width: 95%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    /* Ещё больше уменьшаем шапку */
+    header, footer {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    /* Уменьшаем отступы и текст */
+    h1, h2, p {
+        margin: 5px;
+        font-size: 16px;
+    }
+
+    /* Делаем кнопки удобнее для мобильных */
+    form button {
+        padding: 12px;
+    }
 }
