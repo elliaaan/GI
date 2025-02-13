@@ -1,5 +1,18 @@
-<%- include('../layout', { 
-    body: `
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Profile - My Pink App</title>
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/auth/logout">Logout</a>
+      </nav>
+    </header>
+
+    <main>
       <h2>Profile</h2>
       <p>Email: <%= user.email %></p>
       <% if (user.profilePicture) { %>
@@ -12,6 +25,10 @@
         <input type="file" name="profilePicture">
         <button type="submit">Update Profile</button>
       </form>
-    `,
-    user: user
-}) %>
+    </main>
+
+    <footer>
+      <p>My Pink Footer &copy; 2025</p>
+    </footer>
+  </body>
+</html>

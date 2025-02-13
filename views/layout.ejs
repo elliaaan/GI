@@ -3,7 +3,6 @@
   <head>
     <title>My Pink App</title>
     <link rel="stylesheet" href="/css/style.css">
-    <!-- Можно вынести общий <head> в partials/head.ejs, как вариант -->
   </head>
   <body>
     <header>
@@ -20,8 +19,7 @@
     </header>
 
     <main>
-      <!-- Контент страниц -->
-      <%= body %>
+      <%- content %>
     </main>
 
     <footer>

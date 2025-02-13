@@ -1,7 +1,30 @@
-<%- include('../layout', { 
-    body: `
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Home - My Pink App</title>
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="/">Home</a>
+        <% if (user) { %>
+          <a href="/profile">Profile</a>
+          <a href="/auth/logout">Logout</a>
+        <% } else { %>
+          <a href="/auth/login">Login</a>
+          <a href="/auth/register">Register</a>
+        <% } %>
+      </nav>
+    </header>
+
+    <main>
       <h1>Welcome <%= user ? user.email : "Guest" %> to My Pink App!</h1>
       <p>Это классное розовое приложение!</p>
-    `,
-    user: user
-}) %>
+    </main>
+
+    <footer>
+      <p>My Pink Footer &copy; 2025</p>
+    </footer>
+  </body>
+</html>

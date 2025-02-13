@@ -1,5 +1,18 @@
-<%- include('../layout', { 
-    body: `
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Login - My Pink App</title>
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/auth/register">Register</a>
+      </nav>
+    </header>
+
+    <main>
       <h2>Login</h2>
       <% if (typeof error !== 'undefined') { %>
         <p style="color:red;"><%= error %></p>
@@ -7,12 +20,16 @@
       <form action="/auth/login" method="POST">
         <label>Email</label>
         <input type="email" name="email" required>
-        
+
         <label>Password</label>
         <input type="password" name="password" required>
-        
+
         <button type="submit">Login</button>
       </form>
-    `,
-    user: null
-}) %>
+    </main>
+
+    <footer>
+      <p>My Pink Footer &copy; 2025</p>
+    </footer>
+  </body>
+</html>
