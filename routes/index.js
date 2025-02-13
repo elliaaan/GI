@@ -1,8 +1,8 @@
-// routes/index.js
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 const User = require('../models/User');
 
 // Middleware для проверки авторизации
@@ -13,10 +13,16 @@ function isAuthenticated(req, res, next) {
   return res.redirect('/auth/login');
 }
 
-// Настраиваем multer для загрузки фото
+// Создаём папку `public/uploads`, если её нет
+const uploadDir = path.join(__dirname, '../public/uploads/');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+// Настраиваем Multer для загрузки фото
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'public/uploads'); 
+    cb(null, uploadDir); // Используем полный путь
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -50,14 +56,12 @@ router.put('/profile', isAuthenticated, upload.single('profilePicture'), async (
     if (req.file) {
       user.profilePicture = '/uploads/' + req.file.filename;
     }
-    // Если есть другие поля для обновления, можно их здесь обработать
-    // user.name = req.body.name;
-    await user.save();
 
+    await user.save();
     return res.redirect('/profile');
   } catch (error) {
-    console.error(error);
-    return res.redirect('/profile');
+    console.error('Profile update error:', error);
+    return res.status(500).send('Internal Server Error');
   }
 });
 
