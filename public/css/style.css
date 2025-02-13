@@ -1,28 +1,103 @@
+/* 📌 Общие стили */
 body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    background-color: #ffe4e9; /* нежно-розовый фон */
+    background-color: #ffe4e9; /* Нежно-розовый фон */
     color: #333;
-  }
-  
-  header, footer {
-    background-color: #ffb6c1; /* более насыщенный розовый */
-    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Страница занимает минимум 100% экрана */
+}
+
+/* 📌 Контейнер для основного контента */
+main {
+    flex: 1; /* Растягивает содержимое, чтобы футер был внизу */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Центрируем содержимое */
+    justify-content: center;
+    padding: 20px;
+}
+
+/* 📌 Хедер и футер */
+header, footer {
+    background-color: #ffb6c1; /* Более насыщенный розовый */
+    padding: 15px;
     text-align: center;
-  }
-  
-  nav a {
+    width: 100%;
+}
+
+/* 📌 Футер всегда внизу */
+footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* 📌 Навигация */
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+nav a {
     color: #333;
-    margin: 0 10px;
     text-decoration: none;
-  }
-  
-  h1, h2, p {
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: 0.3s ease-in-out;
+}
+
+nav a:hover {
+    background-color: #ff99aa;
+    color: white;
+}
+
+/* 📌 Стили для заголовков и текста */
+h1, h2, p {
     margin: 20px;
-  }
-  
-  form {
-    margin: 20px;
-  }
-  
+    text-align: center;
+}
+
+/* 📌 Стили для форм */
+form {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+form input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+form button {
+    background-color: #ff99aa;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-top: 15px;
+    width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+form button:hover {
+    background-color: #ff6680;
+}
