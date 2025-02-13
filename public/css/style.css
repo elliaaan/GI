@@ -1,16 +1,16 @@
-/* 📌 Общие стили */
+
 body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    background-color: #ffe4e9; /* Нежно-розовый фон */
+    background-color: #ffe4e9; 
     color: #333;
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Страница занимает минимум 100% экрана */
+    min-height: 100vh; 
 }
 
-/* 📌 Контейнер для основного контента */
+
 main {
     flex: 1;
     display: flex;
@@ -20,7 +20,6 @@ main {
     padding: 20px;
 }
 
-/* 📌 Хедер и футер */
 header, footer {
     background-color: #ffb6c1;
     padding: 15px;
@@ -28,7 +27,6 @@ header, footer {
     width: 100%;
 }
 
-/* 📌 Навигация (как на первом скриншоте) */
 nav {
     display: flex;
     justify-content: center;
@@ -50,7 +48,7 @@ nav a:hover {
     color: white;
 }
 
-/* 📌 Контейнер для изображения */
+
 .profile-picture-container {
     display: flex;
     justify-content: center;
@@ -58,14 +56,13 @@ nav a:hover {
 }
 
 .profile-picture-container img {
-    width: 300px; /* Увеличенный размер */
+    width: 300px; 
     height: auto;
     border-radius: 10px;
     border: 4px solid #ff99aa;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
-/* 📌 Форма загрузки */
 .profile-form {
     background: white;
     padding: 20px;
@@ -76,14 +73,14 @@ nav a:hover {
     text-align: center;
 }
 
-/* 📌 Контейнер для кнопок */
+
 .button-group {
     display: flex;
     justify-content: space-between;
     margin-top: 15px;
 }
 
-/* 📌 Кнопки */
+
 .update-btn, .delete-btn {
     width: 48%;
     padding: 10px;
@@ -129,6 +126,6 @@ nav a:hover {
 
 @media screen and (max-width: 480px) {
     .profile-picture-container img {
-        width: 200px; /* Оптимально для телефонов */
+        width: 200px; /* for phone  */
     }
 }

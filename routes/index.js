@@ -6,14 +6,14 @@ const cloudinary = require('cloudinary').v2;
 const User = require('../models/User');
 require('dotenv').config();
 
-// 📌 Конфигурация Cloudinary
+// configure Cloudinary
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-// 📌 Настраиваем Multer + Cloudinary
+//Multer + Cloudinary
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
@@ -23,7 +23,7 @@ const storage = new CloudinaryStorage({
 });
 const upload = multer({ storage });
 
-// 📌 Middleware для проверки авторизации
+// Middleware check if user is authenticated
 function isAuthenticated(req, res, next) {
   if (req.session && req.session.user) {
     return next();
@@ -31,12 +31,12 @@ function isAuthenticated(req, res, next) {
   return res.redirect('/auth/login');
 }
 
-// 📌 Главная страница
+// main page
 router.get('/', (req, res) => {
   res.render('pages/home', { user: req.session.user });
 });
 
-// 📌 Страница профиля
+// profile page
 router.get('/profile', isAuthenticated, async (req, res) => {
   try {
     const user = await User.findById(req.session.user.id);
@@ -47,7 +47,7 @@ router.get('/profile', isAuthenticated, async (req, res) => {
   }
 });
 
-// 📌 Обновление профиля (загрузка фото в Cloudinary)
+// update profile picture 
 router.put('/profile', isAuthenticated, upload.single('profilePicture'), async (req, res) => {
   try {
     const user = await User.findById(req.session.user.id);
@@ -65,19 +65,19 @@ router.put('/profile', isAuthenticated, upload.single('profilePicture'), async (
   }
 });
 
-// 📌 Удаление фото профиля
+// delete profile picture
 router.delete('/profile/delete-picture', isAuthenticated, async (req, res) => {
   try {
     const user = await User.findById(req.session.user.id);
     if (!user || !user.profilePicture) return res.redirect('/profile');
 
-    // 📌 Получаем `public_id` Cloudinary (он нужен для удаления фото)
+    // get public_id of the picture
     const publicId = user.profilePicture.split('/').pop().split('.')[0];
 
-    // 📌 Удаляем фото из Cloudinary
+    // delete picture from Cloudinary
     await cloudinary.uploader.destroy(`profile_pictures/${publicId}`);
 
-    // 📌 Очищаем поле фото в БД
+    // delete picture from user
     user.profilePicture = '';
     await user.save();
 

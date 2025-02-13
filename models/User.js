@@ -1,4 +1,4 @@
-// models/User.js
+
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
   },
   profilePicture: {
     type: String,
-    default: '' // или можем хранить URL
+    default: '' // or we can store the URL
   }
 });
 

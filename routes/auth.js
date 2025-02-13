@@ -3,49 +3,49 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
-// Регулярное выражение для валидации email
+//regular expressionfor email validation
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-// Функция для валидации пароля (минимум 8 символов, хотя бы одна буква и цифра)
+//function to validate password
 const isValidPassword = (password) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password);
 
-// Регистрация (GET)
+// request Get
 router.get('/register', (req, res) => {
   res.render('pages/register'); 
 });
 
-// Регистрация (POST)
+// request POST
 router.post('/register', async (req, res) => {
   try {
     const { email, password } = req.body;
     
-    // Проверка заполнения полей
+    // check if fields are empty
     if (!email || !password) {
       return res.render('pages/register', { error: 'Please fill all fields' });
     }
 
-    // Валидация email
+    // validate email
     if (!emailRegex.test(email)) {
       return res.render('pages/register', { error: 'Invalid email format' });
     }
 
-    // Валидация пароля
+    // validate password
     if (!isValidPassword(password)) {
       return res.render('pages/register', { 
         error: 'Password must be at least 8 characters long and contain at least one letter and one number' 
       });
     }
 
-    // Проверяем, существует ли уже пользователь
+    // check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.render('pages/register', { error: 'User already exists' });
     }
 
-    // Хешируем пароль
+    // hash password
     const hashedPassword = await bcrypt.hash(password, 10);
     
-    // Создаём пользователя
+    // create user
     const newUser = new User({
       email,
       password: hashedPassword
@@ -59,12 +59,12 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// Логин (GET)
+// login get
 router.get('/login', (req, res) => {
   res.render('pages/login');
 });
 
-// Логин (POST)
+// login post
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -77,18 +77,18 @@ router.post('/login', async (req, res) => {
       return res.render('pages/login', { error: 'User not found' });
     }
 
-    // Проверка, заблокирован ли пользователь
+    // check if account is locked
     if (user.isLocked) {
       return res.render('pages/login', { error: 'Account locked. Contact support.' });
     }
 
-    // Сравниваем пароль
+    // ensure password is correct
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      // Увеличиваем счётчик неудачных попыток
+      //  the number of failed login attempts
       user.failedLoginAttempts += 1;
 
-      // Если достигли 5 неудачных попыток - блокируем
+      // if the number of failed login attempts is greater than or equal to 5, lock the account
       if (user.failedLoginAttempts >= 5) {
         user.isLocked = true;
       }
@@ -97,11 +97,11 @@ router.post('/login', async (req, res) => {
       return res.render('pages/login', { error: 'Invalid password' });
     }
 
-    // Если пароль верный, сбрасываем счётчик и заходим
+    //if the password is correct, reset the number of failed login attempts
     user.failedLoginAttempts = 0;
     await user.save();
 
-    // Сохраняем информацию в сессии
+    // save user data
     req.session.user = { id: user._id, email: user.email };
     return res.redirect('/profile');
   } catch (err) {
@@ -110,7 +110,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// Логаут
+// LOGOUT
 router.get('/logout', (req, res) => {
   req.session.destroy(err => {
     if (err) console.log(err);
