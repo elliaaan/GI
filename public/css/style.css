@@ -12,138 +12,95 @@ body {
 
 /* 📌 Контейнер для основного контента */
 main {
-    flex: 1; /* Растягивает содержимое, чтобы футер был внизу */
+    flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Центрируем содержимое */
+    align-items: center;
     justify-content: center;
     padding: 20px;
 }
 
 /* 📌 Хедер и футер */
 header, footer {
-    background-color: #ffb6c1; /* Более насыщенный розовый */
+    background-color: #ffb6c1;
     padding: 15px;
     text-align: center;
     width: 100%;
 }
 
-/* 📌 Футер всегда внизу */
-footer {
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
-
-/* 📌 Навигация */
-nav {
+/* 📌 Контейнер для изображения */
+.profile-picture-container {
     display: flex;
     justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap; /* Позволяет переносить элементы */
+    margin-bottom: 20px;
 }
 
-nav a {
-    color: #333;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 8px 12px;
-    border-radius: 5px;
-    transition: 0.3s ease-in-out;
+.profile-picture-container img {
+    width: 200px; /* Увеличенный размер */
+    height: auto;
+    border-radius: 10px;
+    border: 3px solid #ff99aa;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-nav a:hover {
-    background-color: #ff99aa;
-    color: white;
-}
-
-/* 📌 Стили для заголовков и текста */
-h1, h2, p {
-    margin: 20px;
-    text-align: center;
-}
-
-/* 📌 Стили для форм */
-form {
+/* 📌 Форма загрузки */
+.profile-form {
     background: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 90%; /* Адаптивная ширина */
+    width: 90%;
     max-width: 400px;
     text-align: center;
 }
 
-form label {
-    display: block;
-    margin-top: 10px;
-    font-weight: bold;
-}
-
-form input {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-form button {
-    background-color: #ff99aa;
-    color: white;
-    border: none;
-    padding: 10px;
+/* 📌 Контейнер для кнопок */
+.button-group {
+    display: flex;
+    justify-content: space-between;
     margin-top: 15px;
-    width: 100%;
+}
+
+/* 📌 Кнопки */
+.update-btn, .delete-btn {
+    width: 48%;
+    padding: 10px;
+    border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: 0.3s ease-in-out;
 }
 
-form button:hover {
+.update-btn {
+    background-color: #ff99aa;
+    color: white;
+}
+
+.update-btn:hover {
     background-color: #ff6680;
+}
+
+.delete-btn {
+    background-color: #ff4444;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #cc0000;
 }
 
 /* 📌 Адаптивность */
 @media screen and (max-width: 768px) {
-    /* Делаем шапку и футер меньше */
-    header, footer {
-        padding: 10px;
+    .profile-picture-container img {
+        width: 150px;
     }
 
-    /* Уменьшаем отступы и шрифт */
-    h1, h2, p {
-        margin: 10px;
-        font-size: 18px;
-    }
-
-    /* Делаем навигацию столбиком на маленьких экранах */
-    nav {
+    .button-group {
         flex-direction: column;
         gap: 10px;
     }
 
-    /* Уменьшаем форму */
-    form {
-        width: 95%;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    /* Ещё больше уменьшаем шапку */
-    header, footer {
-        padding: 8px;
-        font-size: 14px;
-    }
-
-    /* Уменьшаем отступы и текст */
-    h1, h2, p {
-        margin: 5px;
-        font-size: 16px;
-    }
-
-    /* Делаем кнопки удобнее для мобильных */
-    form button {
-        padding: 12px;
+    .update-btn, .delete-btn {
+        width: 100%;
     }
 }
